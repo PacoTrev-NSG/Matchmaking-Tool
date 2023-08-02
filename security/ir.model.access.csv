@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shoe_smes,shoe.smes,model_shoe_smes,base.group_user,1,1,1,1
+access_shoe_searches,shoe.searches,model_shoe_searches,base.group_user,1,1,1,1
+access_shoe_skills,shoe.skills,model_shoe_skills,base.group_user,1,1,1,1
+access_shoe_technologies,shoe.technologies,model_shoe_technologies,base.group_user,1,1,1,1
+access_shoe_technologies_options,shoe.technologies.options,model_shoe_technologies_options,base.group_user,1,1,1,1
+access_shoe_tags_technologies,shoe.tags.technologies,model_shoe_tags_technologies,base.group_user,1,1,1,1
+access_shoe_functionalities,shoe.functionalities,model_shoe_functionalities,base.group_user,1,1,1,1
+access_shoe_ratings,shoe.ratings,model_shoe_ratings,base.group_user,1,1,1,1
+access_shoe_suppliers,shoe.suppliers,model_shoe_suppliers,base.group_user,1,1,1,1
+access_shoe_weighted_functionalities,shoe.weighted.functionalities,model_shoe_weighted_functionalities,base.group_user,1,1,1,1
+access_shoe_search_wizard,shoe.search.wizard,model_shoe_search_wizard,base.group_user,1,1,1,1

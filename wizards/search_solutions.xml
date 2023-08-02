@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="shoe_search_wizard_form" model="ir.ui.view">
+            <field name="name">wizard.search.wizard.form</field>
+            <field name="model">shoe.search.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h2>
+                                <field name="name" readonly = '1'/>
+                            </h2>
+                        </div>
+                        <group id="properties" col= "4" string= "Preferences">
+                            <field name="upfront_budget_max"/>
+                            <field name="yearly_budget_max"/>
+                            <field name="user_friendliness_level"/>
+                            <field name="testing_level"/>
+                            <field name="training_level"/>
+                            <field name="cost_scheme"/>
+                            <field name="deployment"/>
+                            <field name="customization_level"/>
+                            <field name="configurability_level"/>
+                            <field name="support_availability"/>
+                        </group>
+                        <field name="weighted_functionalities"/>
+                    </sheet>
+                    <footer>
+                        <button name="searching_solutions" string="Search" type="object" class="oe_highlight"/> 
+                        <button string="Cancelar" class="btn-secondary" special="cancel" name = "cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="shoe_search_wizard" model="ir.actions.act_window">
+            <field name="name">Search Wizard</field>
+            <field name="res_model">shoe.search.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

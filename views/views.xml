@@ -1,0 +1,634 @@
+<odoo>
+  <data>
+    <!-- Form View Technologies -->
+    <record id="shoe_technologies_form" model="ir.ui.view">
+        <field name="name">shoe.technologies.form</field>
+        <field name="model">shoe.technologies</field>
+        <field name="arch" type="xml">
+            <form string="Technological Solution">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_stars" icon= "fa-star-half-o">
+                            <field name="rating_stars" string = "/5 stars" widget = "statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_comments" icon= "fa-comments">
+                            <field name="comments" string = "Comments" widget = "statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="name" placeholder= "Name of the Solution"/>
+                        </h2>
+                    </div>
+                    <group col="4">
+                        <field name="supplier"/>
+                        <field name="short_description"/>
+                    </group>
+                    <notebook>
+                        <page name="skills" string="Skills">
+                            <group col="4">
+                                <field name="skills_use" widget= "many2many_tags" options="{'create': false, 'create_edit': false}"/>
+                                <field name="skills_configure" widget= "many2many_tags" options="{'create': false, 'create_edit': false}"/>
+                            </group>
+                        </page>
+                        <page name="functions" string="Functionalities">
+                            <group>
+                                <field name="tags" widget= "many2many_tags" options="{'create': false, 'create_edit': false}"/>
+                            </group>
+                            <field name="functionalities" domain="[('tags', 'in', tags)]" options="{'create': false, 'create_edit': false}"/>
+                        </page>
+                        <page name="costs" string="Costs">
+                            <group col="4">
+                                <field name="upfront_cost" widget = "monetary"/>
+                                <field name="cost_scheme"/>
+                                <field name="period_cost"/>
+                                <field name="recurrent_cost" widget = "monetary"/>
+                                <field name="total_yearly_cost" widget = "monetary" readonly = "1" force_save = "1"/>
+                            </group>
+                        </page>
+                        <page name="friendliness" string="User friendliness">
+                            <group col="4">
+                                <field name="manuals"/>
+                                <field name="help"/>
+                            </group>
+                        </page>
+                        <page name="deploy" string="Deployment">
+                            <group>
+                                <field name="deployment"/>
+                            </group>
+                        </page>
+                        <page name="training" string="Training">
+                            <group col="4">
+                                <field name="training_free" />
+                                <field name="training_cost"/>
+                                <field name="hours_free" attrs="{'invisible': [('training_free', '=', False)], 'required': [('training_free', '=', True)]}"/>
+                                <field name="hours_cost" attrs="{'invisible': [('training_cost', '=', False)], 'required': [('training_cost', '=', True)]}"/>
+                                <field name="cost_training" widget = "monetary" attrs="{'invisible': [('training_cost', '=', False)], 'required': [('training_cost', '=', True)]}"/>
+                            </group>
+                        </page>
+                        <page name="testing" string="Testing">
+                            <group col="4">
+                                <field name="test"/>
+                                <field name="test_free" attrs="{'invisible': [('test', '=', False)], 'required': [('test', '=', True)]}"/>
+                                <field name="test_limit" attrs="{'invisible': [('test', '=', False)], 'required': [('test', '=', True)]}"/>
+                                <field name="deepness_trail" attrs="{'invisible': [('test', '=', False)], 'required': [('test', '=', True)]}"/>
+                                <field name="lenght_trail" attrs="{'invisible': ['|',('test', '=', False), ('test_limit', '=', True)], 'required': [('test', '=', True)]}"/>
+                                <field name="cost_trail" widget = "monetary" attrs="{'invisible': ['|','&amp;',('test_free', '=', True), ('test', '=', True), ('test', '=', False)], 'required': ['&amp;',('test', '=', True),('test_free', '=', False)]}"/>
+                            </group>
+                        </page>
+                        <page name="configurability" string="Configurability">
+                            <group>
+                                <field name="configurability_level"/>
+                            </group>
+                        </page>
+                        <page name="customization" string="Customization">
+                            <group col="4">
+                                <field name="customization_level"/>
+                                <field name="customization_cost" widget = "monetary"/>
+                            </group>
+                        </page>
+                        <page name="support" string="Support">
+                            <group col="4">
+                                <field name="support_presence" />
+                                <field name="support_free" attrs="{'invisible': [('support_presence', '=', False)], 'required': [('support_presence', '=', True)]}"/>
+                                <field name="support_availability" attrs="{'invisible': [('support_presence', '=', False)], 'required': [('support_presence', '=', True)]}"/>
+                                <field name="support_cost" widget= "monetary" attrs="{'invisible': ['|', '&amp;',('support_free', '=', True), ('support_presence', '=', True), ('support_presence', '=', False)], 'required': ['&amp;',('support_presence', '=', True),('support_free', '=', False)]}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View Technologies Options-->
+    <record id="shoe_technologies_options_form" model="ir.ui.view">
+        <field name="name">shoe.technologies.options.form</field>
+        <field name="model">shoe.technologies.options</field>
+        <field name="arch" type="xml">
+            <form string="Solution Option">
+                <sheet>
+                    <field name="solution"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View Tags Technologies -->
+    <record id="shoe_tags_technologies_form" model="ir.ui.view">
+        <field name="name">shoe.tags.technologies.form</field>
+        <field name="model">shoe.tags.technologies</field>
+        <field name="arch" type="xml">
+            <form string="Tag">
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                    </group>
+                    <field name="functionalities" options="{'create': false, 'create_edit': false}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View Suppliers -->
+    <record id="shoe_suppliers_form" model="ir.ui.view">
+        <field name="name">shoe.suppliers.form</field>
+        <field name="model">shoe.suppliers</field>
+        <field name="arch" type="xml">
+            <form string="Supplier">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_implementations" icon= "fa-cogs">
+                            <field name="implementations" string = "Deploys" widget = "statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_comments" icon= "fa-star-half-o">
+                            <field name="comments" string = "Feedbacks" widget = "statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="code" readonly = '1' force_save="1"/>
+                        </h4>
+                        <h2>
+                            <field name="name" placeholder= "Name of the Company"/>
+                        </h2>
+                    </div>
+                    <group col="2" string = "Company's Information">
+                        <group>
+                            <field name="website" widget= "url"/>
+                            <field name="phone_number"/>
+                        </group>
+                        <group>
+                            <field name="country" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="state" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="city"/>
+                        </group>
+                    </group>
+                    <group col="4" string = "Contact's Information">
+                        <field name="contact"/>
+                        <field name="phone_number_contact"/>
+                        <field name="email_contact"/>
+                    </group>
+                    <field name="solutions" readonly = "1" options="{'no_create': True, 'no_create_edit': True}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View Ratings -->
+    <record id="shoe_ratings_form" model="ir.ui.view">
+        <field name="name">shoe.ratings.form</field>
+        <field name="model">shoe.ratings</field>
+        <field name="arch" type="xml">
+            <form string="Rating">
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View SMEs -->
+    <record id="shoe_smes_form" model="ir.ui.view">
+        <field name="name">shoe.smes.form</field>
+        <field name="model">shoe.smes</field>
+        <field name="arch" type="xml">
+            <form string="SME">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_implementations" icon= "fa-cogs">
+                            <field name="implementations" string = "Deploys" widget = "statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_comments" icon= "fa-star-half-o">
+                            <field name="comments" string = "Feedbacks" widget = "statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="code" readonly = '1' force_save="1"/>
+                        </h4>
+                        <h2>
+                            <field name="name" placeholder= "Name of the Company"/>
+                        </h2>
+                    </div>
+                    <group col="2" string = "Company's Information">
+                        <group>
+                            <field name="website" widget= "url"/>
+                            <field name="phone_number"/>
+                            <field name="num_employees"/>
+                            <field name="company_industry"/>
+                        </group>
+                        <group>
+                            <field name="country" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="state" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="city"/>
+                        </group>
+                    </group>
+                    <group col="4" string = "Contact's Information">
+                        <field name="contact"/>
+                        <field name="phone_number_contact"/>
+                        <field name="email_contact"/>
+                    </group>
+                    <notebook>
+                        <page name="searches" string="Searches">
+                            <field name="searches" readonly = '1'/>
+                        </page>
+                        <page name="skills" string="Skills">
+                            <field name="skills" options="{'create': false, 'create_edit': false}"/>
+                        </page>
+                        <page name="questions" string="Questionnaire">
+                            <group>
+                                <field name="experience"/>
+                                <field name="team_digital"/>
+                                <field name="coding"/>
+                                <field name="technological_saavy"/>
+                            </group>
+                        </page>
+                        <page name="reserved_info" string="User">
+                            <group>
+                                <field name="user" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View Searches -->
+    <record id="shoe_searches_form" model="ir.ui.view">
+        <field name="name">shoe.searches.form</field>
+        <field name="model">shoe.searches</field>
+        <field name="arch" type="xml">
+            <form string="Searches">
+                <header>
+                    <button name="evaluate_solutions"
+                        icon="fa-search"
+                        help = "Update Search"
+                        class="oe_highlight"
+                        type="object"
+                        attrs="{'invisible': [('status', '!=', 'draft')]}"
+                    />
+                    <button name="select_solution"
+                        icon="fa-check-square-o"
+                        help = "Choose Solution"
+                        class="oe_highlight"
+                        type="object"
+                        attrs="{'invisible': [('status', '!=', 'draft')]}"
+                    />
+                    <button name="close_query"
+                        icon="fa-window-close-o"
+                        help = "Close Query"
+                        class="oe_highlight"
+                        type="object"
+                        attrs="{'invisible': [('status', '!=', 'draft')]}"
+                    />
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Completed" bg_color="bg-success" attrs="{'invisible': [('status', '!=', 'implemented')]}"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="bg-danger" attrs="{'invisible': [('status', '!=', 'closed')]}"/>
+                    <widget name="web_ribbon" title="Draft" bg_color="bg-info" attrs="{'invisible': [('status', '!=', 'draft')]}"/>
+                    <field name="status" invisible = "1"/>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="code" readonly = '1' force_save="1"/>
+                        </h4>
+                        <h2>
+                            <field name="name" placeholder= "Give a name to the search" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                        </h2>
+                    </div>
+                    <group col="4">
+                        <field name="sme" readonly = "1"/>
+                        <field name="time" readonly = "1"/>
+                        <field name="chosen" readonly = "1"/>
+                        <field name="date" readonly = "1"/>
+                    </group>
+                    <notebook>
+                        <page name="functions" string="Functionalities">
+                            <group>
+                                <field name="tags" widget= "many2many_tags" options="{'create': false, 'create_edit': false}" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="functionalities" widget= "many2many_tags" domain="[('tags', 'in', tags)]" options="{'create': false, 'create_edit': false}" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <button name="add_function"
+                                    string="+"
+                                    help = "Add function"
+                                    class="oe_highlight"
+                                    type="object"
+                                    attrs="{'invisible': [('status', '!=', 'draft')]}"
+                                />
+                            </group>
+                            <field name="weighted_functionalities" options="{'create': false, 'create_edit': false}" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                        </page>
+                        <page name="skills" string="Skills">
+                            <field name="skills" options="{'create': false, 'create_edit': false}" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                        </page>
+                        <page name="questions" string="Questionnaire">
+                            <group string= "Experience" col= "4">
+                                <field name="experience" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="team_digital" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="coding" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="technological_saavy" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                            </group>
+                            <group string= "Availability" col= "4">
+                                <field name="users" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="time_deploy" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="time_training" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                            </group>
+                            <group string= "Characteristics" col= "4">
+                                <field name="tailored" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="updates" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                <field name="critical" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                            </group>
+                        </page>
+                        <page name="budget" string="Budget">
+                            <group string = "Budget in pounds">
+                                <!-- <field name="budget_option" attrs="{'readonly': [('status', '!=', 'draft')]}"/> -->
+                                <group>
+                                    <field name="upfront_budget_max" widget = "monetary" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                    <field name="yearly_budget_max" widget = "monetary" attrs="{'readonly': [('status', '!=', 'draft')]}"/>
+                                </group>
+                                <!-- <field name="total_budget_max" widget = "monetary" attrs="{'readonly': [('status', '!=', 'draft')],'invisible': [('budget_option', '!=', 'total')], 'required': [('budget_option', '=', 'total')]}"/> -->
+                            </group>
+                        </page>
+                        <page name="results" string="Results">
+                            <!-- <field name="order_by"/> -->
+                            <field name="solutions" readonly = '1' force_save = '1'/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View Functionalities -->
+    <record id="shoe_functionalities_form" model="ir.ui.view">
+        <field name="name">shoe.functionalities.form</field>
+        <field name="model">shoe.functionalities</field>
+        <field name="arch" type="xml">
+            <form string="Functionalities">
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="tags" widget="many2many_tags" readonly = "1" force_save= "1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Form View Skills -->
+    <record id="shoe_skills_form" model="ir.ui.view">
+        <field name="name">shoe.skills.form</field>
+        <field name="model">shoe.skills</field>
+        <field name="arch" type="xml">
+            <form string="Skills">
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List View SMEs -->
+    <record model="ir.ui.view" id="shoe_smes_tree">
+        <field name="name">shoe.smes.tree</field>
+        <field name="model">shoe.smes</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="country"/>
+                <field name="company_industry"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Searches -->
+    <record model="ir.ui.view" id="shoe_searches_tree">
+        <field name="name">shoe.searches.tree</field>
+        <field name="model">shoe.searches</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Suppliers -->
+    <record model="ir.ui.view" id="shoe_suppliers_tree">
+        <field name="name">shoe.suppliers.tree</field>
+        <field name="model">shoe.suppliers</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="country"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Ratings -->
+    <record model="ir.ui.view" id="shoe_ratings_tree">
+        <field name="name">shoe.ratings.tree</field>
+        <field name="model">shoe.ratings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Functionalities -->
+    <record model="ir.ui.view" id="shoe_functionalities_tree">
+        <field name="name">shoe.functionalities.tree</field>
+        <field name="model">shoe.functionalities</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Weighted Functionalities -->
+    <record model="ir.ui.view" id="shoe_weighted_functionalities_tree">
+        <field name="name">shoe.weighted.functionalities.tree</field>
+        <field name="model">shoe.weighted.functionalities</field>
+        <field name="arch" type="xml">
+            <tree editable = 'top'>
+                <field name="name" readonly = '1'/>
+                <field name="weight"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Skills -->
+    <record model="ir.ui.view" id="shoe_skills_tree">
+        <field name="name">shoe.skills.tree</field>
+        <field name="model">shoe.skills</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Technologies Options-->
+    <record model="ir.ui.view" id="shoe_technologies_options_tree">
+        <field name="name">shoe.technologies.options.tree</field>
+        <field name="model">shoe.technologies.options</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="solution"/>
+                <field name="eval_functionality"/>
+                <field name="eval_characteristics"/>
+                <field name="eval_feedback"/>
+                <field name="eval_cost"/>
+                <field name="eval_cost_scheme"/>
+                <field name="eval_user_friend"/>
+                <field name="eval_testing"/>
+                <field name="eval_training"/>
+                <field name="eval_deployment"/>
+                <field name="eval_customization"/>
+                <field name="eval_configurability"/>
+                <field name="eval_support"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- List View Technologies -->
+    <record model="ir.ui.view" id="shoe_technologies_tree">
+        <field name="name">shoe.technologies.tree</field>
+        <field name="model">shoe.technologies</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="supplier"/>
+                <field name="short_description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- List View Tags Technologies -->
+    <record model="ir.ui.view" id="shoe_tags_technologies_tree">
+        <field name="name">shoe.tags.technologies.tree</field>
+        <field name="model">shoe.tags.technologies</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="functionalities" widget = "many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search view Parts -->
+    <!-- <record id="technologies_search_view" model= "ir.ui.view">
+        <field name="name">technologies.search.view</field>
+        <field name="model">technologies</field>
+        <field name="arch" type="xml">
+            <search string="Solutions" >
+                <field name="tags_technology"/>
+                <field name="tags_characteristics"/>
+                <field name="supplier"/>
+                <searchpanel>
+                    <field name="tags_technology" icon="fa-puzzle-piece" />
+                    <field name="tags_characteristics" icon="fa-puzzle-piece"/>
+                    <field name="supplier" icon="fa-puzzle-piece"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record> -->
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="shoe_technologies">
+      <field name="name">Technologies</field>
+      <field name="res_model">shoe.technologies</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_functionalities">
+      <field name="name">Functionalities</field>
+      <field name="res_model">shoe.functionalities</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_weighted_functionalities">
+      <field name="name">Weighted Functionalities</field>
+      <field name="res_model">shoe.weighted.functionalities</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_technologies_options">
+      <field name="name">Options</field>
+      <field name="res_model">shoe.technologies.options</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_tags_technologies">
+      <field name="name">Tags Technologies</field>
+      <field name="res_model">shoe.tags.technologies</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_suppliers">
+      <field name="name">Suppliers</field>
+      <field name="res_model">shoe.suppliers</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_searches">
+      <field name="name">Searches</field>
+      <field name="res_model">shoe.searches</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_skills">
+      <field name="name">Skills</field>
+      <field name="res_model">shoe.skills</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_smes">
+      <field name="name">SMEs</field>
+      <field name="res_model">shoe.smes</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shoe_ratings">
+      <field name="name">Ratings</field>
+      <field name="res_model">shoe.ratings</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="Searches" sequence = "1" id="menu_shoe_searches" web_icon="FRT26-Dissertation,static/icons/icon_searches.png"/>
+    <menuitem name="SMEs" sequence = "2"  id="menu_shoe_smes" web_icon="FRT26-Dissertation,static/icons/icon_smes.png"/>
+    <menuitem name="Skills" sequence = "5"  id="menu_shoe_skills" web_icon="FRT26-Dissertation,static/icons/icon_skills.png"/>
+    <menuitem name="Solutions" sequence = "4"  id="menu_shoe_technologies" web_icon="FRT26-Dissertation,static/icons/icon_technologies.png"/>
+    <menuitem name="Suppliers" sequence = "3" id="menu_shoe_suppliers" web_icon="FRT26-Dissertation,static/icons/icon_suppliers.png"/>
+    <menuitem name="Tags" id="menu_shoe_tags" web_icon="FRT26-Dissertation,static/icons/icon_tags.png"/>
+
+    <!-- menu categories -->
+    <menuitem name="Searches" id="shoe_searches_submenu" parent="FRT26-Dissertation.menu_shoe_searches" action="shoe_searches"/>
+    <menuitem name="Skills" id="shoe_skills_submenu" parent="FRT26-Dissertation.menu_shoe_skills" action="shoe_skills"/>
+    <menuitem name="SMEs" id="shoe_smes_submenu" parent="FRT26-Dissertation.menu_shoe_smes" action="shoe_smes"/>
+    <menuitem name="Solutions" id="shoe_technologies_submenu" parent="FRT26-Dissertation.menu_shoe_technologies" action="shoe_technologies"/>
+    <menuitem name="Options" id="shoe_technologies_options_submenu" parent="FRT26-Dissertation.menu_shoe_technologies" action="shoe_technologies_options"/>
+    <menuitem name="Suppliers" id="shoe_suppliers_submenu" parent="FRT26-Dissertation.menu_shoe_suppliers" action="shoe_suppliers"/>
+    <menuitem name="Tags Technologies" id="shoe_tags_technologies_submenu" parent="FRT26-Dissertation.menu_shoe_tags" action="shoe_tags_technologies"/>
+    <menuitem name="Functionalities" id="shoe_functionalities_submenu" parent="FRT26-Dissertation.menu_shoe_tags" action="shoe_functionalities"/>
+    <menuitem name="Weighted Functionalities" id="shoe_weighted_functionalities_submenu" parent="FRT26-Dissertation.menu_shoe_tags" action="shoe_weighted_functionalities"/>
+    <menuitem name="Ratings" id="shoe_ratings_submenu" parent="FRT26-Dissertation.menu_shoe_technologies" action="shoe_ratings"/>
+
+  </data>
+</odoo>
